@@ -42,7 +42,6 @@ end
 ```
 
 ## Usage (Client)
-
 ```lua
 local function Inventory(container: Folder)
     

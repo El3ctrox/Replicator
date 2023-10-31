@@ -2,7 +2,7 @@
 name = "ernisto/replicator"
 version = "0.1.0"
 registry = "https://github.com/UpliftGames/wally-index"
-realm = "server"
+realm = "shared"
 
 [dependencies]
 Promise = "lukadev-0/Typed-Promise@4.0.2"
