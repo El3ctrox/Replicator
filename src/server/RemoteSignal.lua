@@ -2,7 +2,6 @@
 local Players = game:GetService("Players")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local wrapper = require(ReplicatedStorage.Packages.Wrapper)
 local Signal = require(ReplicatedStorage.Packages.Signal)
 type Signal<data...> = Signal.Signal<data...>
 type Connection = Signal.Connection
@@ -52,10 +51,14 @@ end
 ]=]
 function RemoteSignal.new(name: string): RemoteSignal
 	
-	local remoteEvent = Instance.new("RemoteEvent")
-	remoteEvent.Name = name
+	local bindableEvent = Instance.new("BindableEvent")
+	bindableEvent.name = name
+	bindableEvent:AddTag("RemoteField")
 	
-	return RemoteSignal.wrap(remoteEvent)
+	local remoteEvent = Instance.new("RemoteEvent")
+	remoteEvent.Name = "Replicator"
+	
+	return RemoteSignal.wrap(bindableEvent)
 end
 --[=[
 	@within RemoteSignal
@@ -65,59 +68,10 @@ end
 	
 	Wraps the remoteEvent with a new RemoteSignal and Signal.
 ]=]
-function RemoteSignal.wrap(remoteEvent: RemoteEvent)
+function RemoteSignal.wrap(bindableEvent: BindableEvent & { Replicator: RemoteEvent })
 	
-    local self = wrapper(remoteEvent, "RemoteSignal", "RemoteField")
-    local signal = self:_host(Signal.new("LocalEvent"))
-	
-	--[=[
-		@within Signal
-		@method connect
-		@param callback function	-- function called when signal fired
-		@return Connection		-- object to handle the callback, like disconnect the callback or reconnect
-		
-		Create a listener/observer for signal.
-		Useful to bind and unbind functions to some emitter, which can be fired when something happens during game.
-	]=]
-	function self:connect(callback: (...any) -> ())
-		
-		return signal:connect(callback)
-	end
-	--[=[
-		@within RemoteSignal
-		@method once
-		@param callback function	-- function called when signal fired
-		@return Connection		-- object to handle the callback, like disconnect the callback or reconnect
-		
-		Create a listener/observer for signal.
-		Like Signal:connect, but the connection is :disconnect()'ed after triggered, but can be :reconnect()'ed multiple times.
-	]=]
-	function self:once(callback: (...any) -> ())
-		
-		return signal:once(callback)
-	end
-	
-	--[=[
-		@within RemoteSignal
-		@method awaitWithinTimeout
-		
-		Wait until the signal was fired within a given timeout, and returns your data if signal was fired before timeout.
-		Useful to wait some event without blocking infinitely the coroutine. Such wait some client response.
-	]=]
-	function self:awaitWithinTimeout(timeout: number): any...
-		
-		return signal:awaitWithinTimeout(timeout)
-	end
-	--[=[
-		@within RemoteSignal
-		@method await
-		
-		Wait until the signal was fired and returns your data.
-	]=]
-	function self:await(): any...
-		
-		return signal:await()
-	end
+    local self = Signal.wrap(bindableEvent)
+	local remoteEvent = bindableEvent.Replicator
 	
 	--[=[
 		@within RemoteSignal
@@ -146,7 +100,7 @@ function RemoteSignal.wrap(remoteEvent: RemoteEvent)
 	]=]
 	function self:_emitOff(blacklist: {Player},...: any)
 		
-		signal:_emit(...)
+		self:_emit(...)
 		
 		for _,player in Players:GetPlayers() do
 			
@@ -181,7 +135,7 @@ function RemoteSignal.wrap(remoteEvent: RemoteEvent)
 	]=]
 	function self:_emitOn(whitelist: {Player},...: any)
 		
-		signal:_emit(...)
+		self:_emit(...)
 		
 		for _,player in whitelist do
 			
@@ -189,35 +143,8 @@ function RemoteSignal.wrap(remoteEvent: RemoteEvent)
 		end
 	end
 	
-	--[=[
-		@within RemoteSignal
-		@method _tryEmit
-		@param ... any	-- data
-		@return boolean	-- returns false if any error occurred while calling some listener, else returns true
-		
-		Call all listeners, if havent any error, fires the remote event for all clients and then return true,
-		if some error occurred while calling some listener, this will return false.
-		Useful for signals which can be cancelled for some listener.
-	]=]
-	function self:_tryEmit(...: any): boolean
-		
-		return pcall(self._emit, self,...)
-	end
-	--[=[
-		@within RemoteSignal
-		@method _emit
-		@param ... any	-- data
-		
-		Fire all listeners then fire the remote event for all clients.
-	]=]
-	function self:_emit(...: any)
-		
-		signal:_emit(...)
-		remoteEvent:FireAllClients(...)
-	end
-	
 	--// End
-	remoteSignals[remoteEvent] = self
+	remoteSignals[bindableEvent] = self
 	return self
 end
 export type RemoteSignal<data...> = Signal<data...> & {

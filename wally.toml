@@ -5,5 +5,6 @@ registry = "https://github.com/UpliftGames/wally-index"
 realm = "server"
 
 [dependencies]
+Promise = "lukadev-0/Typed-Promise@4.0.2"
 Wrapper = "ernisto/wrapper@0.1.0"
 Signal = "ernisto/signal@0.1.0"

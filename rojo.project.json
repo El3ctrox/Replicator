@@ -1,0 +1,26 @@
+{
+  "name": "Replicator",
+  "tree": {
+    "$className": "DataModel",
+    
+    "ServerScriptService": {
+      "Replicator": { "$path": "src/server" }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Replication": { "$path": "src/client" }
+      }
+    },
+    
+    "Workspace": {
+      "$properties": {
+        "FilteringEnabled": true
+      }
+    },
+    "SoundService": {
+      "$properties": {
+        "RespectFilteringEnabled": true
+      }
+    }
+  }
+}
