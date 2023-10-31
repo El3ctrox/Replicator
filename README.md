@@ -33,7 +33,7 @@ local function Inventory(owner: Player)
     --// Methods
     function self:addItem(item)
         
-        self.itemAdded:_emit(item)    -- :FireAllClients
+        self.itemAdded:_emitAll(item)    -- :FireAllClients
     end
     
     --// End

@@ -143,6 +143,34 @@ function RemoteSignal.wrap(bindableEvent: BindableEvent & { Replicator: RemoteEv
 		end
 	end
 	
+	--[=[
+		@within RemoteSignal
+		@method _tryEmitAll
+		@param ... any	-- data
+		@return boolean	-- returns false if any error occurred while calling some listener, else returns true
+		
+		Call all listeners, if havent any error, fires the remote event for all players and
+		then return true, if some error occurred while calling some listener, this will return false.
+		Useful for send data for all players
+	]=]
+	function self:_tryEmitAll(...: any): boolean
+		
+		return pcall(self._emitAll, self,...)
+	end
+	--[=[
+		@within RemoteSignal
+		@method _emitAll
+		@param ... any	-- data
+		
+		Call all listeners and fires the remote event for all players.
+		Useful for send data for specific players
+	]=]
+	function self:_emitAll(...: any)
+		
+		self:_emit(...)
+		remoteEvent:FireAllClients(...)
+	end
+	
 	--// End
 	remoteSignals[bindableEvent] = self
 	return self
