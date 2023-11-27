@@ -6,7 +6,7 @@ type Signal<data...> = Signal.Signal<data...>
 local ServerSignal = {}
 
 --// Factory
-function ServerSignal.wrap(bindableEvent: BindableEvent & { Replicator: RemoteEvent })
+function ServerSignal.wrap(bindableEvent: model)
     
     --// Instance
     local self = Signal.wrap(bindableEvent)
@@ -22,6 +22,7 @@ function ServerSignal.wrap(bindableEvent: BindableEvent & { Replicator: RemoteEv
     return self
 end
 export type ServerSignal<data...> = Signal<data...>
+export type model = BindableEvent & { Replicator: RemoteEvent }
 
 --// End
 return ServerSignal

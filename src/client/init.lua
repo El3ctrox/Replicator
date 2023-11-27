@@ -34,19 +34,19 @@ function Replication.wrap(container: Instance)
         end
         self[`invoke{remoteFunction.Name}Async`] = invoke
     end
-    local function setupRemoteEvent(remoteEvent: RemoteEvent)
+    local function setupRemoteEvent(bindableEvent: BindableEvent)
         
-        remoteEvent:WaitForChild("LocalEvent")
+        bindableEvent:WaitForChild("Replicator")
         
-        local serverSignal = ServerSignal.wrap(remoteEvent)
-        self[remoteEvent.Name] = serverSignal
+        local serverSignal = ServerSignal.wrap(bindableEvent :: ServerSignal.model)
+        self[bindableEvent.Name] = serverSignal
     end
     local function setupRemote(child: Instance)
         
         if not child:HasTag("RemoteField") then return end
         
         if child:IsA("RemoteFunction") then setupRemoteFunction(child)
-        elseif child:IsA("RemoteEvent") then setupRemoteEvent(child)
+        elseif child:IsA("BindableEvent") then setupRemoteEvent(child)
         end
         loadedFields += 1
     end
