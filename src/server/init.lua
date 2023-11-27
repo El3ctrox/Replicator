@@ -48,7 +48,7 @@ function Replicator.wrap(instance: Instance)
         
         owner = instance
         
-        while not owner:IsA("Player") do
+        while owner and not owner:IsA("Player") do
             
             if owner:IsA("BasePart") and owner:GetNetworkOwner()
                 then owner = owner:GetNetworkOwner()
