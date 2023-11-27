@@ -30,14 +30,14 @@ end
 --[=[
 	@within RemoteSignal
 	@function get
-	@param remoteEvent RemoteEvent
+	@param bindableEvent BindableEvent & { Replicator: RemoteEvent }
 	@return RemoteSignal
 	
-	Find the remoteSignal which is wrapping given remoteEvent, if not exists, will return the given remoteEvent wrapped by a new RemoteSignal.
+	Find the remoteSignal which is wrapping given bindableEvent, if not exists, will return the given remoteEvent wrapped by a new RemoteSignal.
 ]=]
-function RemoteSignal.get(remoteEvent: RemoteEvent): RemoteSignal
+function RemoteSignal.get(bindableEvent: BindableEvent & { Replicator: RemoteEvent }): RemoteSignal
 	
-	return RemoteSignal.find(remoteEvent) or RemoteSignal.wrap(remoteEvent)
+	return RemoteSignal.find(bindableEvent) or RemoteSignal.wrap(bindableEvent)
 end
 
 --[=[
