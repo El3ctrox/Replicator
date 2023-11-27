@@ -97,7 +97,7 @@ function Replicator.wrap(instance: Instance)
         
         Creates a RemoteFunction with the given name
     ]=]
-    function self:_function<params..., result...>(name: string, callback: (player: Player, params...) -> result...): (params...) -> result...
+    function self:_function<params..., result...>(name: string, callback: (player: Player, params...) -> result...)
         
         assert(not query(instance, { Name = name, ClassName = "RemoteFunction" }))
         logRemoteField(`function '{name}'`)
@@ -111,13 +111,6 @@ function Replicator.wrap(instance: Instance)
             assert(not owner or player == owner, `permission denied`)
             return callback(player,...)
         end
-        local function localInvoke(...: params...): result...
-            
-            return callback(nil,...)
-        end
-        
-        self[name] = localInvoke
-        return localInvoke
     end
     
     --// Behaviour
