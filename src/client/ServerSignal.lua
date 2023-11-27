@@ -1,6 +1,5 @@
 --// Packages
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Signal = require(ReplicatedStorage.Packages.Signal)
+local Signal = require(script.Parent.Parent.Parent.Signal)
 type Signal = Signal.Signal
 
 --// Module

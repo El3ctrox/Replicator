@@ -1,7 +1,6 @@
 --// Packages
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local wrapper = require(ReplicatedStorage.Packages.Wrapper)
-local Promise = require(ReplicatedStorage.Packages.Promise)
+local wrapper = require(script.Parent.Parent.Wrapper)
+local Promise = require(script.Parent.Parent.Promise)
 type Promise = Promise.Promise
 
 local ServerSignal = require(script.ServerSignal)
