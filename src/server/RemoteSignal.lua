@@ -174,7 +174,7 @@ function RemoteSignal.wrap(bindableEvent: BindableEvent & { Replicator: RemoteEv
 	remoteSignals[bindableEvent] = self
 	return self
 end
-export type RemoteSignal<data...> = Signal<data...> & {
+export type RemoteSignal<data... = ...any> = Signal<data...> & {
 	_tryEmitOff: (any, blacklist: {Player}, data...) -> boolean,
 	_emitOff: (any, blacklist: {Player}, data...) -> (),
 	_tryEmitOn: (any, whitelist: {Player}, data...) -> boolean,

@@ -130,6 +130,11 @@ function Replicator.wrap(instance: Instance)
     replicators[instance] = self
     return self
 end
+export type Replicator = {
+    _function: (name: string, callback: (player: Player,...any) -> ...any) -> (),
+    _signal: (name: string) -> RemoteSignal,
+    [string]: any
+}
 
 --[=[
     @within Replicator
@@ -158,5 +163,4 @@ function Replicator.get(instance: Instance): Replicator
 end
 
 --// End
-export type Replicator = typeof(Replicator.wrap())
 return Replicator
