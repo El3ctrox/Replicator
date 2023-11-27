@@ -41,9 +41,25 @@ end
 function Replicator.wrap(instance: Instance)
     
     local self, meta = wrapper(instance)
-    local owner = instance:FindFirstAncestorWhichIsA("Player")
-    local remoteFields = 0
     
+    --// Owning
+    local owner
+    local function updateOwner()
+        
+        owner = instance
+        
+        while not owner:IsA("Player") do
+            
+            if owner:IsA("BasePart") and owner:GetNetworkOwner()
+                then owner = owner:GetNetworkOwner()
+                else owner = owner.Parent end
+        end
+    end
+    instance.AncestryChanged:Connect(updateOwner)
+    updateOwner()
+    
+    --// Replication
+    local remoteFields = 0
     self.releasedRemoteFields = nil :: number?
     task.defer(function() self.releasedRemoteFields = remoteFields end)
     
@@ -59,6 +75,7 @@ function Replicator.wrap(instance: Instance)
         end
     end
     
+    --// Methods
     --[=[
         @within Replicator
         @method _signal
