@@ -97,9 +97,12 @@ function Replicator.wrap(instance: Instance)
         
         Creates a RemoteFunction with the given name
     ]=]
-    function self:_function<params..., result...>(name: string, callback: (player: Player, params...) -> result...)
+    function self:_function(name: string, callback: (player: Player, ...any) -> ...any)
         
-        assert(not query(instance, { Name = name, ClassName = "RemoteFunction" }))
+        local existingRemote = not query(instance, { Name = name, ClassName = "RemoteFunction" })
+        if existingRemote then existingRemote.OnServerInvoke = callback; return end
+        -- assert(not existingRemote, `a remote function '{name}' already has defined`)
+        
         logRemoteField(`function '{name}'`)
         
         local remoteFunction = self:_host(Instance.new("RemoteFunction"))
