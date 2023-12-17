@@ -1,4 +1,4 @@
 {
-  "name": "replicator",
+  "name": "replication",
   "tree": { "$path": "src" }
 }

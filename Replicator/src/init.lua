@@ -1,5 +1,5 @@
 --// Packages
-local wrapper = require(script.Parent.Parent.Wrapper)
+local wrapper = require(script.Parent.Wrapper)
 
 local RemoteSignal = require(script.RemoteSignal)
 type RemoteSignal = RemoteSignal.RemoteSignal

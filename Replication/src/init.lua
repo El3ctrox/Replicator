@@ -1,6 +1,6 @@
 --// Packages
-local wrapper = require(script.Parent.Parent.Wrapper)
-local Promise = require(script.Parent.Parent.Promise)
+local wrapper = require(script.Parent.Wrapper)
+local Promise = require(script.Parent.Promise)
 type Promise = Promise.Promise
 
 local ServerSignal = require(script.ServerSignal)

@@ -1,5 +1,5 @@
 --// Packages
-local Signal = require(script.Parent.Parent.Parent.Signal)
+local Signal = require(script.Parent.Parent.Signal)
 type Signal<data...> = Signal.Signal<data...>
 
 --// Module

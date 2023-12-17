@@ -1,7 +1,7 @@
 --.// Packages
 local Players = game:GetService("Players")
 
-local Signal = require(script.Parent.Parent.Parent.Signal)
+local Signal = require(script.Parent.Parent.Signal)
 type Signal<data...> = Signal.Signal<data...>
 type Connection = Signal.Connection
 
