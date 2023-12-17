@@ -1,8 +1,8 @@
-# Project place file
-/Replicator.rbxlx
-
 # Lock files
 /*.lock
 
 # Wally Packages
 /Packages
+
+# Sourcemap
+/sourcemap.json
