@@ -49,7 +49,7 @@ end
 ```lua
 local function Inventory(container: Folder)
     
-    local server = Replication.get(container)
+    local server = Replication.await(container)
     local self = wrapper(container)
     
     self.itemEquipped:connect(function(item: Tool)
