@@ -51,7 +51,7 @@ end
 function RemoteSignal.new(name: string): RemoteSignal
 	
 	local bindableEvent = Instance.new("BindableEvent")
-	bindableEvent.name = name
+	bindableEvent.Name = name
 	bindableEvent:AddTag("RemoteField")
 	
 	local remoteEvent = Instance.new("RemoteEvent")
