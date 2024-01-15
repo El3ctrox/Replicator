@@ -1,8 +1,11 @@
 # Lock files
-/*.lock
+**/*.lock
 
 # Wally Packages
-/Packages
+**/Packages
+
+# Test Project
+/test
 
 # Sourcemap
 /sourcemap.json
