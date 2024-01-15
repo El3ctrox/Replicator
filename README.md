@@ -8,7 +8,7 @@ Replication = "ernisto/replication@0.1.3"
 ```
 And it above wally.toml [server-dependecies]
 ```toml
-Replicator = "ernisto/replicator@0.2.2"
+Replicator = "ernisto/replicator@0.2.3"
 ```
 
 ## Usage (Server)
