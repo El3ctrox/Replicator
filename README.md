@@ -26,7 +26,7 @@ local function Inventory(owner: Player)
     self.itemAdded = client:_signal("itemAdded")
     
     --// Remote Methods  ## create RemoteFunctions
-    function client:equipItem(item: Tool)
+    function client.EquipItem(player, item: Tool)
         
         local somePrivateData = { clock = os.clock() }
         self.itemEquipped:_emitOn({ owner }, item, somePrivateData)   -- whitelist :FireOnClient()
